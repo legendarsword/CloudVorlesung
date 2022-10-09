@@ -1,0 +1,10 @@
+hsh-traefik.legendars.de
+hsh-first-app.legendars.de
+hsh-portainer.legendars.de
+hsh-wordpress.legendars.de
+
+hshcloudvm.westeurope.cloudapp.azure.com
+traefik.hshcloudvm.westeurope.cloudapp.azure.com
+first_app.hshcloudvm.westeurope.cloudapp.azure.com
+portainer.hshcloudvm.westeurope.cloudapp.azure.com
+wordpress.hshcloudvm.westeurope.cloudapp.azure.com

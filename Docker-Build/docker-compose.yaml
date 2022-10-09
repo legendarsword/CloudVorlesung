@@ -8,7 +8,7 @@ services:
     # Enables the web UI and tells Traefik to listen to docker
     ports:
       - 8080:80
-    volumes:
+    #volumes:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.first_app.entrypoints=web"

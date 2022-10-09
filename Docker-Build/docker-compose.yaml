@@ -1,0 +1,28 @@
+version: '3.3'
+ 
+services:
+  first_app:
+    # The official v2 Traefik docker image
+    image: "app"
+    container_name: "first_app"
+    # Enables the web UI and tells Traefik to listen to docker
+    ports:
+      - 8080:80
+    volumes:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.first_app.entrypoints=web"
+      - "traefik.http.routers.first_app.rule=Host(`hsh-first-app.legendars.de`)"
+      - "traefik.http.middlewares.first_app-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.first_app.middlewares=first_app-https-redirect"
+      - "traefik.http.routers.first_app-secure.entrypoints=websecure"
+      - "traefik.http.routers.first_app-secure.rule=Host(`hsh-first-app.legendars.de`)"
+      - "traefik.http.routers.first_app-secure.tls=true"
+      - "traefik.http.routers.first_app-secure.tls.certresolver=http"
+      - "traefik.http.services.first_app-app.loadbalancer.server.port=80"
+      - "traefik.docker.network=web"
+    networks:
+      - "web"
+networks:
+  web:
+    external: true

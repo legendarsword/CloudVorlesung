@@ -1,0 +1,49 @@
+version: '3.3'
+ 
+services:
+  traefik:
+    # The official v2 Traefik docker image
+    image: "traefik:latest"
+    container_name: "traefik"
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+      - "--api=true"
+      - "--api.dashboard=true"
+      - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=web"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+     # für Testzwecke geeignet, da Let's Encrypt "rate limiting" einsetzt
+     # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=alexander.hampel@stud.hs-hannover.de"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+       - "80:80"
+       - "443:443"
+    volumes:
+      - "traefik_data:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=web"
+      - "traefik.http.routers.traefik.rule=Host(`hsh-traefik.legendars.de`)"
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      - "traefik.http.routers.traefik-secure.entrypoints=websecure"
+      - "traefik.http.routers.traefik-secure.rule=Host(`hsh-traefik.legendars.de`)"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=http"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
+    networks:
+      - "web"
+    
+volumes:
+  traefik_data:
+
+networks:
+  web:
+    external: true

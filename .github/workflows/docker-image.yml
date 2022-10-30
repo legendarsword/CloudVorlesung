@@ -9,6 +9,8 @@ env:
   DOCKER_USER: ${{ secrets.Docker_User }}
   #github Secrets for UserName
   DOCKER_PASSWORD: ${{ secrets.Docker_Password }}
+  # APP-Name
+  DOCKER_APP: cloudvorlesung-app
 
 
 jobs:
@@ -24,7 +26,7 @@ jobs:
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         
     - name: Build the Docker image
-      run: docker build ./Docker-Build --tag legendarsword/cloudvorlesung-app:$(date +%s)
+      run: docker build ./Docker-Build -tag $DOCKER_USER/DOCKER_APP:$(date +%s)
       
     - name: Push to Docker Hub
-      run: docker push legendarsword/cloudvorlesung-app:$(date +%s)
+      run: docker push $DOCKER_USER/$DOCKER_APP:$(date +%s)

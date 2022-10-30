@@ -29,4 +29,4 @@ jobs:
       run: docker build ./Docker-Build -t $DOCKER_USER/$DOCKER_APP:$(date +%s)
       
     - name: Push to Docker Hub
-      run: docker push $DOCKER_USER/$DOCKER_APP:$(date +%s)
+      run: docker push legendarsword/cloudvorlesung-app:$(date +%s)

@@ -6,7 +6,7 @@ on:
 
 env:
   # Use docker.io for Docker Hub if empty
-  REGISTRY: legendarsword
+  REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: app
   # github Secrets for UserName

@@ -2,23 +2,37 @@ Link für Infos:
 https://developer.hashicorp.com/terraform/tutorials/azure-get-started/azure-build
 
 
-Nachdem man Terraform installiert hat, muss man sich per Konsole anmelden
 
+
+Nachdem man Terraform installiert hat, muss man sich per Konsole anmelden
 az login
 
 Dann öffnet sich ein Fenster, bei dem man sich beio Azure anmeldet. Dann bekommt man ein paar Werte zurück:
-Hier muss der Wert hinter "id": herauskopiert werden und in den nächsten Befehl eingesetzt werden.
 
-az account set --subscription "subscription-id"
+Nun Terraform initialisieren in dem Terraform Ordner (Herunterladen der Terraform-Provider-Abhängigkeiten)
+terraform init
 
-Dann erstellt man sich ein zusätzlichen Zugang (API-Schnittstelle)
+Ausführungsplan und Syntax prüfen:
+terraform plan -out main.tfplan
 
-az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<SUBSCRIPTION_ID>"
+Ausführungsplan ausführen und Resourcen erstellen:
+terraform apply main.tfplan
+
+Resourcen fürs löschen vorbereiten:
+terraform plan -destroy -out main.destroy.tfplan
+
+Resourcen zerstören (2 Möglichkeiten):
+1. Möglichkeit:
+terraform apply main.destroy.tfplan
+2. Möglichkeit:
+terraform destroy
 
 
-az ad sp create-for-rbac --name Terraform --role Contributor --scopes /subscriptions/14e61926-1dd0-418a-ae85-443fc69c8a4e
+Privaten-Schlüssel Herunterladen:
+terraform output -raw tls_private_key > id_rsa
 
+Öffentlich IP herausfinden:
+terraform output public_ip_address
 
-Set-AzContext -Subscription "<>"
-
-$sp = New-AzADServicePrincipal -DisplayName terraform -Role "Contributor"
+Per SSH verbinden:
+ssh -i id_rsa azureuser@<public_ip_address>

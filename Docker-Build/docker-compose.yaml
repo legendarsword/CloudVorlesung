@@ -3,7 +3,7 @@ version: '3.3'
 services:
   first_app:
     # The official v2 Traefik docker image
-    image: "app"
+    image: "legendarsword/cloudvorlesung-app"
     container_name: "first_app"
     restart: unless-stopped
     # Enables the web UI and tells Traefik to listen to docker

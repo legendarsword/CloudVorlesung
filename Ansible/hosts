@@ -1,0 +1,7 @@
+[azurecloud]
+hshcloud.westeurope.cloudapp.azure.com
+
+[azurecloud:vars]
+ansible_port=22
+ansible_user=azureuser
+ansible_ansible_ssh_private_key_file=id-rsa

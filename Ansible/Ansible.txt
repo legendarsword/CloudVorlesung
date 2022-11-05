@@ -1,0 +1,18 @@
+Links:
+https://markontech.com/devops/install-docker-using-ansible/
+https://medium.com/codex/how-to-install-docker-using-ansible-84d40005169
+https://www.educba.com/ansible-hosts-file/
+
+
+
+
+Änderungen an Ansible Config: /etc/ansible/ansible.cfg 
+
+Abarbeitung der Hosts-Dateien:
+1. ~/hosts
+2. ~/.ansible/hosts
+3. /etc/ansible/hosts
+
+ansible-galaxy collection install community.dockerc
+
+ansible-playbook -i hosts docker-install-playbook.yaml

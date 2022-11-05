@@ -132,11 +132,14 @@ resource "tls_private_key" "example_ssh" {
 
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
-  name                  = "myVM"
+  name                  = "cloudvm"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [azurerm_network_interface.my_terraform_nic.id]
   size                  = "Standard_DS1_v2"
+  eviction_policy       = "Deallocate"
+  priority              = "Spot"
+  max_bid_price         = 0.2
 
   os_disk {
     name                 = "myOsDisk"
@@ -163,4 +166,21 @@ resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
   boot_diagnostics {
     storage_account_uri = azurerm_storage_account.my_storage_account.primary_blob_endpoint
   }
+}
+
+# Create Auto-Shutdown for VM
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "my_terraform_shutdown" {
+  virtual_machine_id = azurerm_linux_virtual_machine.my_terraform_vm.id
+  location = azurerm_resource_group.rg.location
+  enabled = true
+
+  daily_recurrence_time = "0000"
+  timezone = "W. Europe Standard Time"
+
+  notification_settings {
+    enabled = true
+    time_in_minutes = "60"
+    email = "alexander.hampel@stud.hs-hannover.de"
+  }
+
 }

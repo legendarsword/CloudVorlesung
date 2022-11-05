@@ -59,22 +59,47 @@
     - name: Clone my Repository
       git:
         repo: https://github.com/legendarsword/CloudVorlesung.git
-        # dest: /home/azureuser/
+        dest: /home/azureuser/CloudVorlesung
         clone: yes
         update: yes
+    - name: Install python-docker
+      apt: 
+        name: python3-docker 
+        state: latest
+    - name: Docker create Web-Network for Traefik
+      docker_network:
+        name: web 
     - name: start Traefik
-      community.docker.docker_compose:
-        project_src: Traefik
-        build: false
+      ansible.builtin.shell: docker-compose up -d
+      args:
+        chdir: CloudVorlesung/Traefik
     - name: start Portainer
-      community.docker.docker_compose:
-        project_src: Portainer
-        build: false
+      ansible.builtin.shell: docker-compose up -d
+      args:
+        chdir: CloudVorlesung/Portainer
     - name: start Wordpress
-      community.docker.docker_compose:
-        project_src: Wordpress
-        build: false
+      ansible.builtin.shell: docker-compose up -d
+      args:
+        chdir: CloudVorlesung/Wordpress
     - name: start First-App
-      community.docker.docker_compose:
-        project_src: Docker-Build
-        build: false
+      ansible.builtin.shell: docker-compose up -d
+      args:
+        chdir: CloudVorlesung/Docker-Build    
+
+
+    #- name: start Traefik
+    #  community.docker.docker_compose:
+    #    project_src: CloudVorlesung/Traefik
+    #  register: output
+    #- name: start Portainer
+    #  community.docker.docker_compose:
+    #    project_src: CloudVorlesung/Portainer
+    #  register: output
+    #- name: start Wordpress
+    #  community.docker.docker_compose:
+    #    project_src: CloudVorlesung/Wordpress
+    #  register: output
+    #- name: start First-App
+    #  community.docker.docker_compose:
+    #    project_src: CloudVorlesung/Docker-Build
+    #  register: output

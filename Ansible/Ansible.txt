@@ -16,3 +16,5 @@ Abarbeitung der Hosts-Dateien:
 ansible-galaxy collection install community.docker
 
 ansible-playbook -i hosts docker-install-playbook.yaml
+
+ssh-keygen -f /home/administrator/.ssh/known_hosts -R hshcloudvm.westeurope.cloudapp.azure.com

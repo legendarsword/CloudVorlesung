@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: azurecloud
   remote_user: azureuser
   become: true
   tasks:

@@ -62,10 +62,6 @@
         dest: /home/azureuser/CloudVorlesung
         clone: yes
         update: yes
-    - name: Install python-docker
-      apt: 
-        name: python3-docker 
-        state: latest
     - name: Docker create Web-Network for Traefik
       docker_network:
         name: web 
@@ -86,7 +82,10 @@
       args:
         chdir: CloudVorlesung/Docker-Build    
 
-
+    #- name: Install python-docker
+    #  apt: 
+    #    name: python3-docker 
+    #    state: latest
     #- name: start Traefik
     #  community.docker.docker_compose:
     #    project_src: CloudVorlesung/Traefik

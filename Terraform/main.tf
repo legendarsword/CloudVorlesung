@@ -182,5 +182,4 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "my_terraform_shutdown" 
     time_in_minutes = "60"
     email = "alexander.hampel@stud.hs-hannover.de"
   }
-
 }

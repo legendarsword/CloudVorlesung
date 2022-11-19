@@ -36,6 +36,7 @@ terraform output public_ip_address
 
 Per SSH verbinden:
 ssh -i id_rsa azureuser@<public_ip_address>
+ssh -i id_rsa azureuser@hshcloudvm.westeurope.cloudapp.azure.com
 
 Da neue Verifikationsschlüssel angegeben wird:
 ssh-keygen -R "hshcloudvm.westeurope.cloudapp.azure.com"

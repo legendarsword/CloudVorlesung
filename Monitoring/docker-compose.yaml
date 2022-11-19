@@ -12,7 +12,7 @@ services:
     volumes:
       - prometheus_data:/prometheus
       - /home/azureuser/CloudVorlesung/Monitoring/config.yaml:/etc/prometheus/prometheus.yml
-    user: "1000:1000"
+    user: root
     restart: always
     environment:
       TZ: ${TZ}

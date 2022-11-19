@@ -60,6 +60,7 @@
       git:
         repo: https://github.com/legendarsword/CloudVorlesung.git
         dest: /home/azureuser/CloudVorlesung
+        force: yes
         clone: yes
         update: yes
     - name: Docker create Web-Network for Traefik

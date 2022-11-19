@@ -85,6 +85,7 @@
       ansible.builtin.shell: docker-compose up -d
       args:
         chdir: CloudVorlesung/Monitoring   
+    
 
     #- name: Install python-docker
     #  apt: 

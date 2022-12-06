@@ -287,7 +287,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: prometheus-cert
-  namespace: prometheus
+  namespace: monitoring
 spec:
   secretName: prometheus-tls
   issuerRef:

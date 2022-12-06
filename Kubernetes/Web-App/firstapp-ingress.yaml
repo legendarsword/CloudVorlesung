@@ -26,7 +26,39 @@ metadata:
     kubernetes.io/ingress.class: traefik
     #
     # TLS configuration:
-    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    #
+    # Middleware:
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
+spec:
+  rules:
+  - host: hsh-first-app.legendars.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: firstapp-service
+            port:
+              number: 80
+
+---
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: firstapp-ingress
+  namespace: firstapp
+  annotations:
+    # (Optional): Annotations for the Ingress Controller
+    # ---
+    # General:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    #
+    # TLS configuration:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
     #
     # Middleware:

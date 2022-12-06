@@ -1,0 +1,49 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: firstapp-cert
+  namespace: firstapp
+spec:
+  secretName: firstapp-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: hsh-first-app.legendars.de
+  dnsNames:
+  - hsh-first-app.legendars.de
+
+---
+
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: firstapp-ingress
+  namespace: firstapp
+  annotations:
+    # (Optional): Annotations for the Ingress Controller
+    # ---
+    # General:
+    kubernetes.io/ingress.class: traefik
+    #
+    # TLS configuration:
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    #
+    # Middleware:
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
+spec:
+  rules:
+  - host: hsh-first-app.legendars.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: firstapp-service
+            port:
+              number: 80
+  tls: 
+    - hosts:
+      - hsh-first-app.legendars.de
+      secretName: firstapp-tls

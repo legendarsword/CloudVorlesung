@@ -53,19 +53,23 @@ spec:
       labels:
         app: grafana
     spec:
+      securityContext:
+        fsGroup: 472
+        supplementalGroups:
+          - 0
       containers:
       - name: grafana
         image: grafana/grafana:latest
         ports:
         - name: grafana
           containerPort: 3000
-#        resources:
+        resources:
 #          limits:
 #            memory: "1Gi"
 #            cpu: "1000m"
-#          requests:
-#            memory: 500M
-#            cpu: "500m"
+          requests:
+            memory: 500M
+            cpu: "200m"
         volumeMounts:
           - mountPath: /var/lib/grafana
             name: grafana-storage

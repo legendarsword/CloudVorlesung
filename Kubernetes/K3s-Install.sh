@@ -42,7 +42,7 @@ echo https://hsh-rancher.legendars.de/dashboard/?setup=$(kubectl get secret --na
 # Longhorn
 # Installation:
 # Auf jedem Host:
-sudo apt-get install open-iscsi
+sudo apt-get install open-iscsi -y
 
 # Danach auf dem Master:
 helm repo add longhorn https://charts.longhorn.io
